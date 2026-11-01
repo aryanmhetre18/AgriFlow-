@@ -1,35 +1,33 @@
 import React from 'react'
-import { NavLink, Outlet, Navigate, useLocation } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import { DemandProvider } from '../../context/DemandContext.jsx'
 
 const TABS = [
-  { to: '/farmer/demand',              label: 'Market Demand',      end: true  },
-  { to: '/farmer/demand/buyers',       label: 'Buyer Requirements', end: false },
-  { to: '/farmer/demand/opportunities',label: 'Opportunities',      end: false },
+  { to: '/farmer/demand',               label: 'Market Demand',      icon: '📊', end: true  },
+  { to: '/farmer/demand/buyers',        label: 'Buyer Requirements', icon: '🛒', end: false },
+  { to: '/farmer/demand/opportunities', label: 'Opportunities',      icon: '💡', end: false },
 ]
 
 export default function FarmerDemand() {
-  const { pathname } = useLocation()
-
-  // Redirect /farmer/demand base to itself (Outlet handles the index)
   return (
     <DemandProvider>
-      <div>
-        {/* Tab bar */}
-        <div className="flex gap-1 bg-gray-100 rounded-2xl p-1 mb-6 w-fit flex-wrap">
+      <div className="space-y-6 pb-12">
+        {/* Sleek Dark Glassmorphic Tab bar */}
+        <div className="flex gap-1.5 bg-slate-900/90 border border-white/10 rounded-2xl p-1.5 w-fit flex-wrap backdrop-blur-xl shadow-xl">
           {TABS.map((tab) => (
             <NavLink
               key={tab.to}
               to={tab.to}
               end={tab.end}
               className={({ isActive }) =>
-                `px-4 py-2 rounded-xl text-sm font-medium transition-all duration-150
+                `px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-2
                 ${isActive
-                  ? 'bg-white text-agri-green shadow-sm font-semibold'
-                  : 'text-gray-500 hover:text-gray-700'}`
+                  ? 'bg-emerald-500 text-slate-950 font-black shadow-lg shadow-emerald-500/25'
+                  : 'text-slate-400 hover:text-white hover:bg-white/5'}`
               }
             >
-              {tab.label}
+              <span>{tab.icon}</span>
+              <span>{tab.label}</span>
             </NavLink>
           ))}
         </div>

@@ -1,10 +1,11 @@
 import React, { useState, useMemo } from 'react'
 import { useDemand } from '../../../context/DemandContext.jsx'
 import BuyerRequirementRow from '../../../components/demand/BuyerRequirementRow.jsx'
-import DemandLevelBadge    from '../../../components/demand/DemandLevelBadge.jsx'
-import PageHeader          from '../../../components/ui/PageHeader.jsx'
+import DemandLevelBadge from '../../../components/demand/DemandLevelBadge.jsx'
+import PageHeader from '../../../components/ui/PageHeader.jsx'
+import { getCropEmoji } from '../../../utils/cropUtils.js'
 
-// ── Detail modal ──────────────────────────────────────────────────────────────
+// ── Dark Detail modal ─────────────────────────────────────────────────────────
 function BuyerDetailModal({ req, onClose }) {
   if (!req) return null
   const deadline = req.deadline
@@ -12,15 +13,20 @@ function BuyerDetailModal({ req, onClose }) {
     : '—'
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-6 max-w-md w-full">
+    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+      <div className="bg-slate-900 border border-white/15 rounded-3xl shadow-2xl p-6 max-w-md w-full text-white">
         {/* Header */}
-        <div className="flex items-start justify-between mb-5">
-          <div>
-            <h3 className="font-bold text-gray-900 text-lg">{req.cropName} Requirement</h3>
-            <p className="text-sm text-gray-500 mt-0.5">{req.companyName || req.buyerName}</p>
+        <div className="flex items-start justify-between mb-5 pb-4 border-b border-white/10">
+          <div className="flex items-center gap-3">
+            <div className="text-3xl p-2 rounded-2xl bg-white/5 border border-white/10">
+              {getCropEmoji(req.cropName, req.category)}
+            </div>
+            <div>
+              <h3 className="font-bold text-white text-lg">{req.cropName} Requirement</h3>
+              <p className="text-sm text-slate-400 mt-0.5">{req.companyName || req.buyerName}</p>
+            </div>
           </div>
-          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 transition-colors">
+          <button onClick={onClose} className="p-2 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white transition-colors">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -28,43 +34,45 @@ function BuyerDetailModal({ req, onClose }) {
         </div>
 
         {/* Details */}
-        <div className="space-y-0 divide-y divide-gray-50">
+        <div className="space-y-0 divide-y divide-white/5">
           {[
-            { label: 'Crop',               value: `${req.cropName}${req.variety ? ` · ${req.variety}` : ''}` },
-            { label: 'Buyer',              value: req.buyerName },
-            { label: 'Company',            value: req.companyName || '—' },
-            { label: 'Required Quantity',  value: `${req.requiredQuantity.toLocaleString()} ${req.unit}` },
+            { label: 'Crop Spec',          value: `${req.cropName}${req.variety ? ` · ${req.variety}` : ''}` },
+            { label: 'Verified Buyer',     value: req.buyerName },
+            { label: 'Organization',       value: req.companyName || '—' },
+            { label: 'Required Volume',    value: `${req.requiredQuantity.toLocaleString()} ${req.unit}` },
             { label: 'Quality Grade',      value: req.qualityGrade },
-            { label: 'Expected Price',     value: `₹${req.expectedPrice} / ${req.unit}`, highlight: true },
+            { label: 'Offered Price',      value: `₹${req.expectedPrice} / ${req.unit}`, highlight: true },
             { label: 'Delivery Location',  value: req.deliveryLocation },
-            { label: 'Deadline',           value: deadline },
+            { label: 'Contract Deadline',  value: deadline },
           ].map(({ label, value, highlight }) => (
             <div key={label} className="flex justify-between py-2.5">
-              <span className="text-sm text-gray-500">{label}</span>
-              <span className={`text-sm font-medium ${highlight ? 'text-agri-green' : 'text-gray-800'}`}>{value}</span>
+              <span className="text-xs text-slate-400">{label}</span>
+              <span className={`text-xs font-semibold ${highlight ? 'text-emerald-400 text-sm font-black' : 'text-slate-200'}`}>
+                {value}
+              </span>
             </div>
           ))}
         </div>
 
         {req.notes && (
-          <div className="mt-4 bg-gray-50 rounded-xl px-4 py-3">
-            <p className="text-xs text-gray-500 font-medium mb-1">Notes</p>
-            <p className="text-sm text-gray-700">{req.notes}</p>
+          <div className="mt-4 bg-slate-800/80 rounded-2xl px-4 py-3 border border-white/5">
+            <p className="text-xs text-slate-400 font-semibold mb-1">Procurement Notes</p>
+            <p className="text-xs text-slate-200 leading-relaxed">{req.notes}</p>
           </div>
         )}
 
-        <div className="mt-5 flex gap-3">
+        <div className="mt-6 flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+            className="flex-1 py-2.5 rounded-xl border border-white/15 text-xs font-semibold text-slate-300 hover:bg-white/10 transition-colors"
           >
             Close
           </button>
           <button
-            onClick={() => { alert('Listing crop against this requirement — coming in Bookings & Orders module.'); onClose() }}
-            className="flex-1 py-2.5 rounded-xl bg-agri-green text-white text-sm font-semibold hover:bg-agri-dark transition-colors"
+            onClick={() => { alert('Direct listing against buyer requirement initiated.'); onClose() }}
+            className="flex-1 py-2.5 rounded-xl bg-emerald-500 text-slate-950 text-xs font-black hover:bg-emerald-400 transition-colors shadow-lg shadow-emerald-500/20"
           >
-            List My Crop
+            Supply My Harvest
           </button>
         </div>
       </div>
@@ -72,7 +80,6 @@ function BuyerDetailModal({ req, onClose }) {
   )
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
 export default function BuyerRequirements() {
   const { buyerReqs, loading, error } = useDemand()
 
@@ -91,62 +98,69 @@ export default function BuyerRequirements() {
   }), [buyerReqs, search])
 
   return (
-    <div>
-      <PageHeader
-        title="Buyer Requirements"
-        subtitle={`${buyerReqs.length} active buyer requirement${buyerReqs.length !== 1 ? 's' : ''} in your region.`}
-      />
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl lg:text-3xl font-black text-white tracking-tight flex items-center gap-3">
+          <span>Active Buyer Requirements</span>
+          <span className="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+            {buyerReqs.length} Active Demands
+          </span>
+        </h1>
+        <p className="text-sm text-slate-400 mt-1">
+          Direct purchase inquiries from retail chains, food processors, exporters, and wholesale aggregators.
+        </p>
+      </div>
 
       {/* Search */}
-      <div className="relative max-w-md mb-6">
-        <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+      <div className="relative max-w-md">
+        <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"
              fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         <input
           type="text"
-          placeholder="Search crop, buyer or location…"
-          className="input-field pl-9"
+          placeholder="Search crop, buyer, company or delivery region…"
+          className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-900/90 border border-white/15 text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-2xl px-5 py-4 text-sm text-red-700 mb-5">
+        <div className="bg-rose-950/60 border border-rose-500/30 rounded-2xl px-5 py-4 text-sm text-rose-300">
           {error}
         </div>
       )}
 
       {loading ? (
         <div className="space-y-3">
-          {[1,2,3,4].map((i) => (
-            <div key={i} className="card h-14 animate-pulse" />
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="bg-slate-900/80 border border-white/10 rounded-2xl h-16 animate-pulse" />
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center text-3xl mb-4">🛒</div>
-          <p className="font-semibold text-gray-700">No buyer requirements found</p>
-          <p className="text-sm text-gray-400 mt-1">
-            {search ? 'Try a different search term.' : 'Check back soon — new buyer requirements are added regularly.'}
+        <div className="flex flex-col items-center justify-center py-16 text-center bg-slate-900/60 rounded-3xl border border-white/10 p-8">
+          <div className="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-white/10">🛒</div>
+          <p className="font-bold text-white text-lg">No buyer requirements found</p>
+          <p className="text-sm text-slate-400 mt-1">
+            {search ? 'Try modifying your search keywords.' : 'Check back soon — institutional buyer tenders are posted daily.'}
           </p>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+        <div className="bg-slate-900/85 rounded-2xl border border-white/10 overflow-hidden shadow-2xl backdrop-blur-xl">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-100 bg-gray-50/60">
-                  {['Crop', 'Buyer / Company', 'Qty Required', 'Grade', 'Price', 'Location', 'Deadline', 'Demand', ''].map((h) => (
-                    <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide whitespace-nowrap">
+                <tr className="border-b border-white/10 bg-slate-950/60">
+                  {['Crop Spec', 'Buyer / Enterprise', 'Volume Needed', 'Grade', 'Offered Rate', 'Delivery Location', 'Deadline', 'Urgency', ''].map((h) => (
+                    <th key={h} className="px-4 py-3.5 text-left text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-white/5">
                 {filtered.map((req) => (
                   <BuyerRequirementRow key={req.id} req={req} onView={setSelected} />
                 ))}

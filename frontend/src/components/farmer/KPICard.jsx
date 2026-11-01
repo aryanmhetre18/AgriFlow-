@@ -1,18 +1,17 @@
 import React from 'react'
 
 const colorMap = {
-  green:   { bg: 'bg-green-50',   icon: 'bg-green-100',   text: 'text-agri-green' },
-  blue:    { bg: 'bg-blue-50',    icon: 'bg-blue-100',    text: 'text-blue-700'   },
-  amber:   { bg: 'bg-amber-50',   icon: 'bg-amber-100',   text: 'text-amber-700'  },
-  emerald: { bg: 'bg-emerald-50', icon: 'bg-emerald-100', text: 'text-emerald-700'},
+  green:   { bg: 'bg-emerald-500/10 border-emerald-500/30',   icon: 'bg-emerald-500/20 text-emerald-400',   text: 'text-emerald-400' },
+  blue:    { bg: 'bg-blue-500/10 border-blue-500/30',          icon: 'bg-blue-500/20 text-blue-400',          text: 'text-blue-400' },
+  amber:   { bg: 'bg-amber-500/10 border-amber-500/30',        icon: 'bg-amber-500/20 text-amber-400',        text: 'text-amber-400' },
+  emerald: { bg: 'bg-teal-500/10 border-teal-500/30',          icon: 'bg-teal-500/20 text-teal-400',          text: 'text-teal-400' },
 }
 
 const icons = {
   crops: (
     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
-        d="M12 3C12 3 7 8 7 13a5 5 0 0010 0c0-5-5-10-5-10z
-           M12 13v8M8 18h8" />
+        d="M12 3C12 3 7 8 7 13a5 5 0 0010 0c0-5-5-10-5-10z M12 13v8M8 18h8" />
     </svg>
   ),
   bookings: (
@@ -38,15 +37,15 @@ const icons = {
 export default function KPICard({ label, value, icon, trend, color = 'green' }) {
   const c = colorMap[color] || colorMap.green
   return (
-    <div className={`card flex items-start gap-4 ${c.bg} border-0`}>
-      <div className={`${c.icon} ${c.text} p-3 rounded-xl flex-shrink-0`}>
+    <div className={`p-5 rounded-2xl border ${c.bg} backdrop-blur-md transition-all duration-300 hover:scale-[1.02] shadow-lg flex items-start gap-4`}>
+      <div className={`${c.icon} p-3 rounded-xl flex-shrink-0 shadow-inner`}>
         {icons[icon]}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">{label}</p>
-        <p className={`text-2xl font-bold mt-0.5 ${c.text}`}>{value}</p>
+        <p className="text-xs font-bold uppercase tracking-wider text-slate-400">{label}</p>
+        <p className={`text-2xl font-black mt-0.5 tracking-tight ${c.text}`}>{value}</p>
         {trend && (
-          <p className="text-xs text-gray-500 mt-1">{trend}</p>
+          <p className="text-[11px] font-medium text-slate-300 mt-1 truncate">{trend}</p>
         )}
       </div>
     </div>

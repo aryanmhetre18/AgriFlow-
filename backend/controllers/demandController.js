@@ -80,6 +80,26 @@ const SEED_DATA = [
     requiredBy: new Date('2026-12-10'), source: 'manual', isActive: true,
     buyerRequirements: [],
   },
+  {
+    cropName: 'Marigold', variety: 'Pusa Narangi (Orange Genda)', category: 'Flowers',
+    demandQuantity: 1800, unit: 'kg',
+    expectedPriceMin: 50, expectedPriceMax: 65,
+    location: 'Kolhapur, Maharashtra', demandLevel: 'High', demandTrend: 'Rising',
+    requiredBy: new Date('2026-11-06'), source: 'buyer', isActive: true,
+    buyerRequirements: [
+      { buyerName: 'Sanjay Shinde', companyName: 'Mahalaxmi Florists & Decorators', requiredQuantity: 1200, unit: 'kg', qualityGrade: 'Grade A Festive', expectedPrice: 58, deliveryLocation: 'Kolhapur, Maharashtra', deadline: new Date('2026-11-06'), notes: 'Fresh festive bloom for Kolhapur temple market.' },
+    ],
+  },
+  {
+    cropName: 'Dutch Rose', variety: 'Red Taj Mahal', category: 'Flowers',
+    demandQuantity: 8000, unit: 'piece',
+    expectedPriceMin: 12, expectedPriceMax: 18,
+    location: 'Pune, Maharashtra', demandLevel: 'High', demandTrend: 'Rising',
+    requiredBy: new Date('2026-11-12'), source: 'buyer', isActive: true,
+    buyerRequirements: [
+      { buyerName: 'Aarti Kadam', companyName: 'Pune Bloom Express', requiredQuantity: 5000, unit: 'piece', qualityGrade: 'Export Grade', expectedPrice: 16, deliveryLocation: 'Pune APMC, Maharashtra', deadline: new Date('2026-11-12'), notes: 'Polyhouse cut stems with minimum 50cm stem length.' },
+    ],
+  },
 ]
 
 async function seedIfEmpty() {

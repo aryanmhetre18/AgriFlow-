@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth.jsx'
 import { useTranslation } from '../../context/LanguageContext.jsx'
-
 
 const navItems = [
   {
@@ -21,8 +20,7 @@ const navItems = [
     icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
-          d="M12 3C12 3 7 8 7 13a5 5 0 0010 0c0-5-5-10-5-10z
-             M12 13v8M8 18h8" />
+          d="M12 3C12 3 7 8 7 13a5 5 0 0010 0c0-5-5-10-5-10z M12 13v8M8 18h8" />
       </svg>
     ),
   },
@@ -79,7 +77,7 @@ const labelMap = {
 }
 
 export default function FarmerSidebar({ mobileOpen, onClose }) {
-  const { user, logout } = useAuth()
+  const { logout } = useAuth()
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -88,39 +86,43 @@ export default function FarmerSidebar({ mobileOpen, onClose }) {
     navigate('/')
   }
 
-
   const sidebarContent = (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-slate-950 text-slate-200 border-r border-white/10 select-none">
       {/* Logo */}
-      <div className="px-6 py-5 border-b border-gray-100">
+      <div className="px-6 py-5 border-b border-white/10">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-agri-green rounded-lg flex items-center justify-center">
-            <span className="text-white text-sm font-bold">AF</span>
+          <div className="w-9 h-9 bg-gradient-to-tr from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/30">
+            <span className="text-white text-xs font-black">AF</span>
           </div>
           <div>
-            <span className="text-base font-bold text-gray-900">AgriFlow</span>
-            <span className="text-base font-bold text-agri-green"> AI</span>
+            <div className="flex items-center gap-1">
+              <span className="text-base font-black text-white">AgriFlow</span>
+              <span className="text-[10px] font-bold text-white bg-emerald-600 px-1.5 py-0.5 rounded uppercase">AI</span>
+            </div>
+            <p className="text-[11px] font-mono text-emerald-400 font-semibold">Farmer Terminal</p>
           </div>
         </div>
-        <p className="text-xs text-gray-400 mt-1 pl-10">Farmer Portal</p>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             onClick={onClose}
             className={({ isActive }) =>
-              isActive ? 'sidebar-link-active' : 'sidebar-link'
+              `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
+                isActive
+                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-sm shadow-emerald-500/20'
+                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`
             }
           >
             {item.icon}
             <span className="flex-1">{t(labelMap[item.label] || item.label, item.label)}</span>
-
             {item.badge && (
-              <span className="bg-agri-green text-white text-[10px] font-bold px-1.5 py-0.5 rounded-md">
+              <span className="bg-emerald-500 text-slate-950 text-[10px] font-black px-1.5 py-0.5 rounded">
                 {item.badge}
               </span>
             )}
@@ -128,52 +130,45 @@ export default function FarmerSidebar({ mobileOpen, onClose }) {
         ))}
       </nav>
 
-      {/* Bottom */}
-      <div className="px-3 pb-4 border-t border-gray-100 pt-3 space-y-0.5">
+      {/* Bottom Profile & Exit */}
+      <div className="px-3 pb-4 border-t border-white/10 pt-3 space-y-1">
         <NavLink
           to="/farmer/profile"
           onClick={onClose}
-          className="sidebar-link"
+          className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
-              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
-              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          {t('profile', 'Settings')}
+          <span>Farm Settings</span>
         </NavLink>
 
         <button
           onClick={handleLogout}
-          className="sidebar-link w-full text-left text-red-500 hover:bg-red-50 hover:text-red-600"
+          className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-red-400 hover:text-red-300 hover:bg-red-500/10 w-full text-left transition-all"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
-          {t('logout', 'Logout')}
+          <span>{t('logout', 'Logout')}</span>
         </button>
-
       </div>
     </div>
   )
 
   return (
     <>
-      {/* Desktop sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 bg-white border-r border-gray-100 h-screen sticky top-0 flex-shrink-0">
+      <aside className="hidden lg:flex flex-col w-64 h-screen sticky top-0 flex-shrink-0 z-30">
         {sidebarContent}
       </aside>
 
-      {/* Mobile overlay */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 z-40 flex">
-          <div
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm"
-            onClick={onClose}
-          />
-          <aside className="relative w-72 bg-white h-full shadow-2xl z-50">
+        <div className="lg:hidden fixed inset-0 z-50 flex">
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+          <aside className="relative w-72 h-full z-50 shadow-2xl">
             {sidebarContent}
           </aside>
         </div>

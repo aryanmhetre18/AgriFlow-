@@ -15,7 +15,7 @@ const mongoose = require('mongoose')
 
 const DEMAND_LEVELS  = ['High', 'Medium', 'Low']
 const DEMAND_TRENDS  = ['Rising', 'Stable', 'Falling']
-const CATEGORIES     = ['Vegetables', 'Fruits', 'Grains & Cereals', 'Pulses & Legumes', 'Spices & Herbs', 'Oilseeds', 'Other']
+const CATEGORIES     = ['Vegetables', 'Fruits', 'Flowers', 'Grains & Cereals', 'Pulses & Legumes', 'Spices & Herbs', 'Oilseeds', 'Other']
 const SOURCES        = ['manual', 'buyer', 'market', 'ai']
 
 const buyerRequirementSchema = new mongoose.Schema({

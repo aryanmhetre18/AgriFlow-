@@ -11,96 +11,88 @@ export default function TransporterHeader({ onMenuClick }) {
     : 'TR'
 
   return (
-    <header className="bg-white border-b border-gray-100 px-4 lg:px-6 py-3.5 flex items-center justify-between sticky top-0 z-30">
+    <header className="bg-slate-900/85 backdrop-blur-xl border-b border-white/10 px-4 lg:px-6 py-3.5 flex items-center justify-between sticky top-0 z-30 shadow-lg text-slate-100">
       {/* Left: hamburger + search */}
       <div className="flex items-center gap-3 flex-1">
         <button
           onClick={onMenuClick}
-          className="lg:hidden p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors"
+          className="lg:hidden p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors"
           aria-label="Open menu"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
 
         <div className="relative hidden sm:flex items-center max-w-xs w-full">
-          <svg className="absolute left-3 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          <svg className="absolute left-3 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
             type="text"
-            placeholder="Search trips, pickups..."
-            className="pl-9 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl w-full
-                       focus:outline-none focus:ring-2 focus:ring-agri-green/30 focus:border-agri-green/50
-                       placeholder-gray-400 transition-all"
+            placeholder="Search trips, farm pickups..."
+            className="pl-9 pr-4 py-2 text-xs bg-slate-950/80 border border-white/10 rounded-xl w-full text-white focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/50 placeholder-slate-500 transition-all"
           />
         </div>
       </div>
 
       {/* Right: language selector + notifications + profile */}
       <div className="flex items-center gap-2.5 ml-3">
-        {/* Language selector */}
-        <LanguageSelector />
+        <LanguageSelector variant="pill" />
 
         {/* Notification bell */}
         <div className="relative">
           <button
             onClick={() => setNotifOpen(!notifOpen)}
-            className="relative p-2 rounded-xl hover:bg-gray-100 text-gray-600 transition-colors"
+            className="relative p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors"
             aria-label="Notifications"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-purple-400 rounded-full animate-ping"></span>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-purple-400 rounded-full"></span>
           </button>
 
           {notifOpen && (
-            <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-lg border border-gray-100 z-50">
-              <div className="p-4 border-b border-gray-100">
-                <p className="text-sm font-semibold text-gray-900">Notifications</p>
+            <div className="absolute right-0 top-full mt-2 w-72 bg-slate-900 border border-white/15 rounded-2xl shadow-2xl z-50 text-slate-200">
+              <div className="p-4 border-b border-white/10 flex items-center justify-between">
+                <p className="text-xs font-bold text-white uppercase tracking-wider">Fleet Dispatch Alerts</p>
+                <span className="text-[10px] font-mono text-purple-400 font-bold">2 New</span>
               </div>
               <div className="p-3 space-y-2">
-                <div className="flex gap-3 p-2 rounded-xl hover:bg-gray-50 cursor-pointer">
-                  <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="flex gap-3 p-2 rounded-xl bg-white/5 hover:bg-white/10 cursor-pointer transition-colors">
+                  <div className="w-8 h-8 bg-purple-500/20 text-purple-300 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-xs">🚛</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-gray-800">New pickup request assigned</p>
-                    <p className="text-xs text-gray-400 mt-0.5">Nashik → Pune · 30 min ago</p>
+                    <p className="text-xs font-semibold text-white">Farm Pickup Available: Nashik</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">3.5 Ton Reefer · High Margin</p>
                   </div>
                 </div>
-                <div className="flex gap-3 p-2 rounded-xl hover:bg-gray-50 cursor-pointer">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="flex gap-3 p-2 rounded-xl bg-white/5 hover:bg-white/10 cursor-pointer transition-colors">
+                  <div className="w-8 h-8 bg-emerald-500/20 text-emerald-300 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-xs">✅</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-gray-800">Delivery confirmed by buyer</p>
-                    <p className="text-xs text-gray-400 mt-0.5">2 hours ago</p>
+                    <p className="text-xs font-semibold text-white">Delivery Confirmed by Buyer</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Disbursement Released</p>
                   </div>
                 </div>
-              </div>
-              <div className="p-3 border-t border-gray-100">
-                <button className="text-xs text-agri-green font-medium w-full text-center hover:underline">
-                  View all notifications
-                </button>
               </div>
             </div>
           )}
         </div>
 
         {/* Profile */}
-        <div className="flex items-center gap-2.5 pl-2 border-l border-gray-100">
-          <div className="w-8 h-8 bg-agri-green rounded-full flex items-center justify-center">
-            <span className="text-white text-xs font-semibold">{initials}</span>
+        <div className="flex items-center gap-2.5 pl-2.5 border-l border-white/10">
+          <div className="w-8 h-8 bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-full flex items-center justify-center shadow-md shadow-purple-500/30 text-white text-xs font-bold ring-2 ring-purple-400/30">
+            {initials}
           </div>
           <div className="hidden sm:block">
-            <p className="text-sm font-semibold text-gray-900 leading-tight">{user?.name || 'Transporter'}</p>
-            <p className="text-xs text-gray-400 leading-tight">Transporter Portal</p>
+            <p className="text-xs font-bold text-white leading-tight">{user?.name || 'Transporter'}</p>
+            <p className="text-[10px] text-purple-400 leading-tight">🚛 Cold-Chain Fleet Operator</p>
           </div>
         </div>
       </div>
