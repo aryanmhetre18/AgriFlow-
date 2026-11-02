@@ -18,7 +18,7 @@ export default function ApmcPriceLookup({ farmerDistrict = 'Kolhapur', onSelectC
   const [targetMandi, setTargetMandi] = useState('Pune APMC Market')
   const [selectedCategory, setSelectedCategory] = useState('All Demanding Crops')
   const [searchQuery, setSearchQuery] = useState('')
-  
+
   // Custom dropdown states for scroll-down selection
   const [isDistrictOpen, setIsDistrictOpen] = useState(false)
   const [districtSearch, setDistrictSearch] = useState('')
@@ -162,7 +162,7 @@ export default function ApmcPriceLookup({ farmerDistrict = 'Kolhapur', onSelectC
 
         {/* ── Interactive Location Selectors with Custom Scroll-Down Dropdowns ── */}
         <div className="flex flex-wrap items-center gap-3 relative z-40">
-          
+
           {/* 1. Custom Scroll-Down District Selector (All 36 Maharashtra Districts) */}
           <div className="relative" ref={districtRef}>
             <div className="text-[10px] uppercase font-bold text-slate-400 mb-1 px-1">Your District:</div>
@@ -241,11 +241,10 @@ export default function ApmcPriceLookup({ farmerDistrict = 'Kolhapur', onSelectC
                             setIsDistrictOpen(false)
                             setDistrictSearch('')
                           }}
-                          className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition-all duration-150 ${
-                            isSelected
+                          className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition-all duration-150 ${isSelected
                               ? 'bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/40 shadow-sm'
                               : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
-                          }`}
+                            }`}
                         >
                           <div className="flex items-center gap-2.5">
                             <span className="text-sm">📍</span>
@@ -344,11 +343,10 @@ export default function ApmcPriceLookup({ farmerDistrict = 'Kolhapur', onSelectC
                           setIsTargetOpen(false)
                           setTargetSearch('')
                         }}
-                        className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition-all duration-150 ${
-                          isSelected
+                        className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition-all duration-150 ${isSelected
                             ? 'bg-amber-500/20 text-amber-300 font-bold border border-amber-500/40 shadow-sm'
                             : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
-                        }`}
+                          }`}
                       >
                         <div className="flex items-center gap-2.5">
                           <span className="text-sm">🏛️</span>
@@ -380,7 +378,7 @@ export default function ApmcPriceLookup({ farmerDistrict = 'Kolhapur', onSelectC
 
       {/* ── Mechanism to Enter Crop Name & Get Today's APMC Price ── */}
       <div className="my-6 p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-emerald-950/70 via-slate-900/95 to-amber-950/70 border border-emerald-500/35 shadow-xl relative z-10">
-        
+
         {/* Input Bar: Enter Crop Name */}
         <div className="mb-5 pb-5 border-b border-white/10">
           <form onSubmit={handleCropSubmit} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
@@ -421,11 +419,10 @@ export default function ApmcPriceLookup({ farmerDistrict = 'Kolhapur', onSelectC
                   key={c}
                   type="button"
                   onClick={() => handleSelectDemandingCrop(c)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 ${
-                    isSelected
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 ${isSelected
                       ? 'bg-emerald-500 text-slate-950 font-black shadow-md shadow-emerald-500/30 ring-2 ring-emerald-400'
                       : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white border border-white/10'
-                  }`}
+                    }`}
                 >
                   <span className="text-sm">{getCropEmoji(c)}</span>
                   <span>{c}</span>
@@ -516,11 +513,10 @@ export default function ApmcPriceLookup({ farmerDistrict = 'Kolhapur', onSelectC
             </div>
 
             {/* 4. Net Margin Advantage */}
-            <div className={`rounded-2xl p-4 border shadow-xl flex flex-col justify-between ${
-              arbitrage.isProfitable
+            <div className={`rounded-2xl p-4 border shadow-xl flex flex-col justify-between ${arbitrage.isProfitable
                 ? 'bg-emerald-950/80 border-emerald-500/50 shadow-emerald-950/50'
                 : 'bg-slate-800/80 border-white/10'
-            }`}>
+              }`}>
               <div>
                 <p className="text-[11px] font-bold text-emerald-300 flex items-center gap-1">
                   <span>✨ Net Margin Advantage</span>
@@ -553,11 +549,10 @@ export default function ApmcPriceLookup({ farmerDistrict = 'Kolhapur', onSelectC
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 ${
-                selectedCategory === cat
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 ${selectedCategory === cat
                   ? 'bg-emerald-500 text-slate-950 font-bold shadow-md shadow-emerald-500/20'
                   : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700/80 border border-white/10'
-              }`}
+                }`}
             >
               <span>{cat === 'All Demanding Crops' ? '🌾' : cat === 'Vegetables' ? '🥦' : cat === 'Fruits' ? '🍎' : '🌶️'}</span>
               <span>{cat}</span>
@@ -610,13 +605,12 @@ export default function ApmcPriceLookup({ farmerDistrict = 'Kolhapur', onSelectC
                   </div>
 
                   {/* Trend Indicator */}
-                  <span className={`text-[11px] font-bold px-2 py-0.5 rounded-lg flex items-center gap-1 ${
-                    rate.trend === 'up'
+                  <span className={`text-[11px] font-bold px-2 py-0.5 rounded-lg flex items-center gap-1 ${rate.trend === 'up'
                       ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
                       : rate.trend === 'down'
-                      ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
-                      : 'bg-slate-700/60 text-slate-300 border border-white/10'
-                  }`}>
+                        ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
+                        : 'bg-slate-700/60 text-slate-300 border border-white/10'
+                    }`}>
                     {rate.trend === 'up' ? '▲' : rate.trend === 'down' ? '▼' : '●'}
                     {rate.trendDiff}
                   </span>
