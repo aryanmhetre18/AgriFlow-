@@ -12,16 +12,16 @@ function SkeletonCard() {
   return (
     <div className="card animate-pulse space-y-3 p-5">
       <div className="flex gap-3">
-        <div className="w-11 h-11 bg-gray-200 rounded-2xl flex-shrink-0" />
+        <div className="w-11 h-11 bg-white/10 rounded-2xl flex-shrink-0" />
         <div className="flex-1 space-y-2">
-          <div className="h-4 bg-gray-200 rounded w-3/4" />
-          <div className="h-3 bg-gray-100 rounded w-1/2" />
+          <div className="h-4 bg-white/10 rounded w-3/4" />
+          <div className="h-3 bg-white/5 rounded w-1/2" />
         </div>
       </div>
       {[1,2,3,4].map((i) => (
         <div key={i} className="flex justify-between">
-          <div className="h-3 bg-gray-100 rounded w-1/3" />
-          <div className="h-3 bg-gray-200 rounded w-1/4" />
+          <div className="h-3 bg-white/5 rounded w-1/3" />
+          <div className="h-3 bg-white/10 rounded w-1/4" />
         </div>
       ))}
     </div>
@@ -34,10 +34,10 @@ function FilterBar({ filters, setFilters, locations, onClear }) {
                     filters.minPrice || filters.maxPrice
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-4 mb-6 space-y-3">
+    <div className="bg-slate-900/80 rounded-2xl border border-white/10 p-4 mb-6 space-y-3">
       {/* Search */}
       <div className="relative">
-        <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+        <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"
              fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -53,22 +53,22 @@ function FilterBar({ filters, setFilters, locations, onClear }) {
 
       {/* Row 2 — dropdowns */}
       <div className="flex flex-wrap gap-3">
-        <select className="input-field bg-white flex-1 min-w-[130px]"
+        <select className="input-field flex-1 min-w-[130px]"
           value={filters.category} onChange={(e) => setFilters({ ...filters, category: e.target.value })}>
           {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
         </select>
 
-        <select className="input-field bg-white flex-1 min-w-[120px]"
+        <select className="input-field flex-1 min-w-[120px]"
           value={filters.grade} onChange={(e) => setFilters({ ...filters, grade: e.target.value })}>
           {GRADES.map((g) => <option key={g}>{g}</option>)}
         </select>
 
-        <select className="input-field bg-white flex-1 min-w-[140px]"
+        <select className="input-field flex-1 min-w-[140px]"
           value={filters.status} onChange={(e) => setFilters({ ...filters, status: e.target.value })}>
           {STATUSES.map((s) => <option key={s}>{s}</option>)}
         </select>
 
-        <select className="input-field bg-white flex-1 min-w-[160px]"
+        <select className="input-field flex-1 min-w-[160px]"
           value={filters.location} onChange={(e) => setFilters({ ...filters, location: e.target.value })}>
           {locations.map((l) => <option key={l}>{l}</option>)}
         </select>
@@ -87,7 +87,7 @@ function FilterBar({ filters, setFilters, locations, onClear }) {
       {/* Clear */}
       {hasActive && (
         <div className="flex justify-end">
-          <button onClick={onClear} className="text-sm text-agri-green font-semibold hover:underline">
+          <button onClick={onClear} className="text-sm text-emerald-400 font-semibold hover:underline">
             Clear all filters
           </button>
         </div>

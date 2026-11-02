@@ -4,16 +4,16 @@ import { fetchPickupRequests } from '../../../services/transporterApi.js'
 import PageHeader              from '../../../components/ui/PageHeader.jsx'
 
 const statusCls = {
-  PENDING:   'bg-amber-100 text-amber-700',
-  ACCEPTED:  'bg-green-100 text-green-800',
-  REJECTED:  'bg-red-100 text-red-600',
-  CANCELLED: 'bg-gray-100 text-gray-600',
-  COMPLETED: 'bg-emerald-100 text-emerald-800',
+  PENDING:   'bg-amber-500/20 text-amber-300 border border-amber-500/30',
+  ACCEPTED:  'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30',
+  REJECTED:  'bg-red-500/20 text-red-300 border border-red-500/30',
+  CANCELLED: 'bg-slate-700/40 text-slate-400 border border-slate-600/30',
+  COMPLETED: 'bg-teal-500/20 text-teal-300 border border-teal-500/30',
 }
 
 function StatusBadge({ status }) {
   return (
-    <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusCls[status] || 'bg-gray-100 text-gray-600'}`}>
+    <span className={`inline-flex px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold ${statusCls[status] || 'bg-white/10 text-slate-300 border border-white/10'}`}>
       {status}
     </span>
   )
@@ -23,13 +23,13 @@ function SkeletonCard() {
   return (
     <div className="card animate-pulse space-y-3">
       <div className="flex gap-3">
-        <div className="w-11 h-11 bg-gray-200 rounded-2xl flex-shrink-0" />
+        <div className="w-11 h-11 bg-white/10 rounded-2xl flex-shrink-0" />
         <div className="flex-1 space-y-2">
-          <div className="h-4 bg-gray-200 rounded w-2/3" />
-          <div className="h-3 bg-gray-100 rounded w-1/2" />
+          <div className="h-4 bg-white/10 rounded w-2/3" />
+          <div className="h-3 bg-white/5 rounded w-1/2" />
         </div>
       </div>
-      {[1,2,3].map((i) => <div key={i} className="h-3 bg-gray-100 rounded w-full" />)}
+      {[1,2,3].map((i) => <div key={i} className="h-3 bg-white/5 rounded w-full" />)}
     </div>
   )
 }

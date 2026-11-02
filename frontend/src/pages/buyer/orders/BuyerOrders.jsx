@@ -4,20 +4,20 @@ import { fetchBuyerOrders }      from '../../../services/ordersApi.js'
 import PageHeader                from '../../../components/ui/PageHeader.jsx'
 
 const statusCls = {
-  Confirmed:          'bg-blue-100 text-blue-700',
-  Preparing:          'bg-orange-100 text-orange-700',
-  'Ready for Pickup': 'bg-violet-100 text-violet-700',
-  'Picked Up':        'bg-teal-100 text-teal-700',
-  'In Transit':       'bg-blue-100 text-blue-800',
-  Delivered:          'bg-emerald-100 text-emerald-800',
-  Cancelled:          'bg-gray-100 text-gray-600',
+  Confirmed:          'bg-blue-500/20 text-blue-300 border border-blue-500/30',
+  Preparing:          'bg-orange-500/20 text-orange-300 border border-orange-500/30',
+  'Ready for Pickup': 'bg-violet-500/20 text-violet-300 border border-violet-500/30',
+  'Picked Up':        'bg-teal-500/20 text-teal-300 border border-teal-500/30',
+  'In Transit':       'bg-blue-500/20 text-blue-300 border border-blue-500/30',
+  Delivered:          'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30',
+  Cancelled:          'bg-slate-700/40 text-slate-400 border border-slate-600/30',
 }
 
 const ACTIVE = ['Confirmed', 'Preparing', 'Ready for Pickup', 'Picked Up', 'In Transit']
 
 function StatusBadge({ status }) {
   return (
-    <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusCls[status] || 'bg-gray-100 text-gray-600'}`}>
+    <span className={`inline-flex px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold ${statusCls[status] || 'bg-white/10 text-slate-300 border border-white/10'}`}>
       {status}
     </span>
   )
@@ -28,7 +28,7 @@ function SkeletonRow() {
     <tr className="animate-pulse">
       {[1,2,3,4,5,6,7,8].map((i) => (
         <td key={i} className="px-4 py-3.5">
-          <div className="h-3.5 bg-gray-200 rounded-full w-full" />
+          <div className="h-3.5 bg-white/10 rounded-full w-full" />
         </td>
       ))}
     </tr>
@@ -45,7 +45,10 @@ export default function BuyerOrders() {
 
   useEffect(() => {
     fetchBuyerOrders()
-      .then(setOrders)
+      .then((res) => {
+        // API may return array or { orders: [...] }
+        setOrders(Array.isArray(res) ? res : (res?.orders || []))
+      })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false))
   }, [])

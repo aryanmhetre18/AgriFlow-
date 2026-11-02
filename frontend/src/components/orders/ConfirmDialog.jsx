@@ -12,9 +12,9 @@ export default function ConfirmDialog({
 }) {
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full">
-        <h3 className="font-bold text-gray-900 text-lg mb-2">{title}</h3>
-        <p className="text-sm text-gray-500 mb-4">{message}</p>
+      <div className="bg-slate-900 border border-white/10 text-slate-100 rounded-2xl shadow-xl p-6 max-w-sm w-full">
+        <h3 className="font-bold text-white text-lg mb-2">{title}</h3>
+        <p className="text-sm text-slate-400 mb-4">{message}</p>
         {children}
         <div className="flex gap-3 mt-4">
           <button

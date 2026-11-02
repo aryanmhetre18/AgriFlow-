@@ -7,7 +7,7 @@ import BookingModal                      from '../../../components/buyer/Booking
 function Section({ title, children }) {
   return (
     <div className="card mb-5">
-      <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4 pb-3 border-b border-gray-100">
+      <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-4 pb-3 border-b border-white/10">
         {title}
       </h3>
       {children}
@@ -17,10 +17,10 @@ function Section({ title, children }) {
 
 function Row({ label, value, highlight, large }) {
   return (
-    <div className="flex justify-between py-2.5 border-b border-gray-50 last:border-0 gap-4">
-      <span className="text-sm text-gray-500 flex-shrink-0">{label}</span>
+    <div className="flex justify-between py-2.5 border-b border-white/10 last:border-0 gap-4">
+      <span className="text-sm text-slate-400 flex-shrink-0">{label}</span>
       <span className={`text-sm font-medium text-right
-        ${highlight ? 'text-agri-green font-semibold' : 'text-gray-800'}
+        ${highlight ? 'text-emerald-400 font-semibold' : 'text-slate-100'}
         ${large ? 'text-base' : ''}`}>
         {value || '—'}
       </span>
@@ -102,7 +102,7 @@ function CropDetailContent() {
       <div className="flex items-start justify-between mb-6 gap-4 flex-wrap">
         <div>
           <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-2xl font-bold text-gray-900">{crop.name}</h1>
+            <h1 className="text-2xl font-bold text-white">{crop.name}</h1>
             <span className={`status-badge text-xs ${statusCls[crop.status] || 'bg-gray-100 text-gray-600'}`}>
               {crop.status}
             </span>
@@ -114,8 +114,8 @@ function CropDetailContent() {
             onClick={() => toggleShortlist(crop)}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold border transition-colors
               ${saved
-                ? 'bg-red-50 border-red-200 text-red-600 hover:bg-red-100'
-                : 'bg-white border-gray-200 text-gray-600 hover:border-agri-green/40 hover:text-agri-green'}`}
+                ? 'bg-rose-500/20 border-rose-500/40 text-rose-300 hover:bg-rose-500/30'
+                : 'bg-slate-800/80 border-white/10 text-slate-200 hover:border-emerald-500/40 hover:text-emerald-300'}`}
           >
             <svg className="w-4 h-4" fill={saved ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={saved ? 0 : 2}
@@ -166,12 +166,12 @@ function CropDetailContent() {
 
       {/* Availability bar */}
       <div className="card mb-5">
-        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4 pb-3 border-b border-gray-100">
+        <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-4 pb-3 border-b border-white/10">
           Quantity & Availability
         </h3>
         <div className="flex gap-6 mb-4 flex-wrap">
           {[
-            { label: 'Total',     v: `${crop.totalQty?.toLocaleString()} ${crop.unit}`,     cls: 'text-gray-900' },
+            { label: 'Total',     v: `${crop.totalQty?.toLocaleString()} ${crop.unit}`,     cls: 'text-white' },
             { label: 'Available', v: `${crop.availableQty?.toLocaleString()} ${crop.unit}`,  cls: 'text-agri-green' },
           ].map(({ label, v, cls }) => (
             <div key={label}>
@@ -183,7 +183,7 @@ function CropDetailContent() {
         <div className="flex justify-between text-xs text-gray-400 mb-1.5">
           <span>Availability</span><span>{availPct}% remaining</span>
         </div>
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
           <div className="h-full bg-agri-green rounded-full transition-all duration-700" style={{ width: `${availPct}%` }} />
         </div>
       </div>
@@ -209,7 +209,7 @@ function CropDetailContent() {
 
       {crop.notes && (
         <Section title="Notes">
-          <p className="text-sm text-gray-700 leading-relaxed">{crop.notes}</p>
+          <p className="text-sm text-slate-200 leading-relaxed">{crop.notes}</p>
         </Section>
       )}
 
@@ -222,7 +222,7 @@ function CropDetailContent() {
                 {crop.farmer.name?.charAt(0)?.toUpperCase() || 'F'}
               </div>
               <div>
-                <p className="font-semibold text-gray-900">{crop.farmer.name}</p>
+                <p className="font-semibold text-white">{crop.farmer.name}</p>
                 <p className="text-xs text-gray-400">{crop.farmer.farmLocation}</p>
               </div>
             </div>

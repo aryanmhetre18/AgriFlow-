@@ -4,18 +4,18 @@ import { fetchBuyerBookings, cancelBookingByBuyer } from '../../../services/orde
 import PageHeader               from '../../../components/ui/PageHeader.jsx'
 
 const statusCls = {
-  Pending:   'bg-amber-100 text-amber-700',
-  Accepted:  'bg-green-100 text-green-800',
-  Rejected:  'bg-red-100 text-red-700',
-  Cancelled: 'bg-gray-100 text-gray-600',
-  Completed: 'bg-emerald-100 text-emerald-800',
+  Pending:   'bg-amber-500/20 text-amber-300 border border-amber-500/30',
+  Accepted:  'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30',
+  Rejected:  'bg-red-500/20 text-red-300 border border-red-500/30',
+  Cancelled: 'bg-slate-700/40 text-slate-400 border border-slate-600/30',
+  Completed: 'bg-teal-500/20 text-teal-300 border border-teal-500/30',
 }
 
 const FILTERS = ['All', 'Pending', 'Accepted', 'Rejected', 'Cancelled']
 
 function StatusBadge({ status }) {
   return (
-    <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusCls[status] || 'bg-gray-100 text-gray-600'}`}>
+    <span className={`inline-flex px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold ${statusCls[status] || 'bg-white/10 text-slate-300 border border-white/10'}`}>
       {status}
     </span>
   )
@@ -23,16 +23,16 @@ function StatusBadge({ status }) {
 
 function CancelDialog({ booking, onConfirm, onCancel, loading }) {
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full">
-        <h3 className="font-bold text-gray-900 text-lg mb-2">Cancel Booking?</h3>
-        <p className="text-sm text-gray-500 mb-5">
-          Cancel your booking for <span className="font-semibold text-gray-800">{booking?.cropName}</span>?
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-slate-900 border border-white/10 rounded-2xl shadow-2xl p-6 max-w-sm w-full">
+        <h3 className="font-bold text-white text-lg mb-2">Cancel Booking?</h3>
+        <p className="text-sm text-slate-400 mb-5">
+          Cancel your booking for <span className="font-semibold text-white">{booking?.cropName}</span>?
           This cannot be undone.
         </p>
         <div className="flex gap-3">
           <button onClick={onCancel} disabled={loading}
-            className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50">
+            className="flex-1 py-2.5 rounded-xl border border-white/10 text-sm font-medium text-slate-300 hover:bg-white/5 transition-colors disabled:opacity-50">
             Keep
           </button>
           <button onClick={onConfirm} disabled={loading}

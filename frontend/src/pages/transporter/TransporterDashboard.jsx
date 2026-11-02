@@ -63,13 +63,19 @@ export default function TransporterDashboard() {
 
   useEffect(() => {
     Promise.all([
-      fetchPickupRequests(),
-      fetchTrips(),
-      fetchEarnings(),
-      fetchVehicleInfo(),
+      fetchPickupRequests().catch(() => []),
+      fetchTrips().catch(() => []),
+      fetchEarnings().catch(() => null),
+      fetchVehicleInfo().catch(() => null),
     ])
-      .then(([pickups, trips, earnings, vehicle]) => {
-        setData({ pickups, trips, earnings, vehicle })
+      .then(([pickups, trips, earnings, vehicleRes]) => {
+        setData({
+          pickups:  Array.isArray(pickups) ? pickups : [],
+          trips:    Array.isArray(trips)   ? trips   : [],
+          earnings,
+          // API returns { vehicleInfo: {...} } — unwrap
+          vehicle:  vehicleRes?.vehicleInfo || vehicleRes || null,
+        })
       })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false))
@@ -108,7 +114,7 @@ export default function TransporterDashboard() {
     status:  p.status,
   }))
 
-  const vehicle = data.vehicle || { vehicleNumber: 'MH-15-EG-4921', vehicleType: 'Reefer 3.5 Ton', capacityKg: 3500 }
+  const vehicle = data.vehicle || { vehicleNumber: 'MH-15-EG-4921', vehicleType: 'Reefer 3.5 Ton', capacity: '3500 kg' }
 
   const currentStepIdx = activeTrip ? DELIVERY_FLOW.indexOf(activeTrip.orderStatus) : -1
   const deliverySteps = DELIVERY_FLOW.map((label, i) => ({

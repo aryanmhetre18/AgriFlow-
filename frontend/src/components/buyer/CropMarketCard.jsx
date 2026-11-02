@@ -24,7 +24,7 @@ function InfoRow({ label, value, highlight }) {
   return (
     <div className="flex justify-between items-center py-1 last:pb-0">
       <span className="text-xs text-gray-400">{label}</span>
-      <span className={`text-xs font-medium ${highlight ? 'text-agri-green font-semibold' : 'text-gray-700'}`}>
+      <span className={`text-xs font-medium ${highlight ? 'text-emerald-400 font-semibold' : 'text-slate-200'}`}>
         {value || '—'}
       </span>
     </div>
@@ -53,7 +53,7 @@ export default function CropMarketCard({ crop, compact = false }) {
             {emoji}
           </div>
           <div className="min-w-0">
-            <h3 className="font-bold text-gray-900 text-base leading-tight truncate">{crop.name}</h3>
+            <h3 className="font-bold text-white text-base leading-tight truncate">{crop.name}</h3>
             <p className="text-xs text-gray-400 truncate">{crop.variety || crop.category}</p>
           </div>
         </div>
@@ -94,14 +94,14 @@ export default function CropMarketCard({ crop, compact = false }) {
 
       {/* Farmer badge */}
       {crop.farmer && (
-        <div className="flex items-center justify-between mb-3 bg-gray-50 rounded-xl px-3 py-2">
+        <div className="flex items-center justify-between mb-3 bg-white/5 border border-white/5 rounded-xl px-3 py-2">
           <div className="flex items-center gap-2 min-w-0">
             <div className="w-6 h-6 bg-agri-green rounded-full flex items-center justify-center flex-shrink-0">
               <span className="text-white text-[10px] font-bold">
                 {crop.farmer.name?.charAt(0)?.toUpperCase() || 'F'}
               </span>
             </div>
-            <span className="text-xs font-medium text-gray-700 truncate">{crop.farmer.name}</span>
+            <span className="text-xs font-medium text-slate-200 truncate">{crop.farmer.name}</span>
           </div>
           {crop.farmer.verification === 'Verified' ? (
             <span className="text-xs font-semibold text-green-700 bg-green-100 px-2 py-0.5 rounded-full flex items-center gap-1 flex-shrink-0">
@@ -120,7 +120,7 @@ export default function CropMarketCard({ crop, compact = false }) {
       </div>
 
       {/* Actions */}
-      <div className="flex gap-2 pt-3 border-t border-gray-100">
+      <div className="flex gap-2 pt-3 border-t border-white/10">
         <button
           onClick={() => navigate(`/buyer/marketplace/crop/${crop.id}`)}
           className="flex-1 py-2.5 rounded-xl text-xs font-semibold bg-agri-green text-white

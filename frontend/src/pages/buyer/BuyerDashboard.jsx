@@ -88,13 +88,18 @@ export default function BuyerDashboard() {
 
   useEffect(() => {
     Promise.all([
-      fetchBuyerOrders(),
-      fetchBuyerBookings(),
-      fetchRequirements(),
-      fetchBuyerPayments(),
-      fetchMarketplaceCrops(),
+      fetchBuyerOrders().catch(() => []),
+      fetchBuyerBookings().catch(() => []),
+      fetchRequirements().catch(() => []),
+      fetchBuyerPayments().catch(() => null),
+      fetchMarketplaceCrops().catch(() => []),
     ])
-      .then(([orders, bookings, requirements, payments, marketplaceCrops]) => {
+      .then(([ordersRes, bookingsRes, reqsRes, payments, mktRes]) => {
+        // APIs may return arrays directly OR wrapped in { orders/bookings/requirements/crops: [...] }
+        const orders           = Array.isArray(ordersRes)   ? ordersRes   : (ordersRes?.orders   || [])
+        const bookings         = Array.isArray(bookingsRes) ? bookingsRes : (bookingsRes?.bookings || [])
+        const requirements     = Array.isArray(reqsRes)     ? reqsRes     : (reqsRes?.requirements || [])
+        const marketplaceCrops = Array.isArray(mktRes)      ? mktRes      : (mktRes?.crops         || [])
         setData({ orders, bookings, requirements, payments, marketplaceCrops })
       })
       .catch((e) => setError(e.message))
@@ -216,33 +221,71 @@ export default function BuyerDashboard() {
           </button>
         </div>
 
-        <div className="grid sm:grid-cols-3 gap-4">
-          {recommendedSupply.map((c) => (
-            <div
-              key={c.id}
-              className="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-500/40 hover:bg-white/[0.07] transition-all flex flex-col justify-between"
+        {loading ? (
+          <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            {[1, 2, 3].map((i) => <div key={i} className="h-48 rounded-2xl bg-white/5 animate-pulse" />)}
+          </div>
+        ) : recommendedSupply.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center border border-dashed border-white/15 rounded-2xl">
+            <div className="w-14 h-14 bg-blue-500/20 text-blue-300 rounded-2xl flex items-center justify-center text-3xl mb-3">🛒</div>
+            <p className="font-bold text-white text-sm">No crop listings available yet</p>
+            <p className="text-xs text-slate-400 mt-1 max-w-sm">
+              Fresh farm lots from verified farmers will appear here. Browse the marketplace or post a requirement.
+            </p>
+            <button
+              onClick={() => navigate('/buyer/marketplace')}
+              className="mt-4 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all"
             >
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full">
-                    {c.grade}
-                  </span>
-                  <span className="text-xs text-slate-400 font-mono">{c.qty}</span>
-                </div>
-                <h4 className="font-bold text-white text-base">{c.crop}</h4>
-                <p className="text-xs text-slate-400 mt-1">📍 {c.location}</p>
-                <p className="font-mono font-bold text-emerald-400 text-lg mt-3">{c.price}</p>
-              </div>
-
-              <button
-                onClick={() => navigate(`/buyer/marketplace/${c.id}`)}
-                className="mt-4 w-full py-2 bg-white/10 hover:bg-blue-600 text-white font-bold text-xs rounded-xl transition-all"
+              Browse Marketplace →
+            </button>
+          </div>
+        ) : (
+          <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            {recommendedSupply.map((c) => (
+              <div
+                key={c.id}
+                className="p-5 rounded-2xl bg-slate-900/90 border border-white/10 hover:border-blue-500/40 hover:bg-slate-900 transition-all duration-300 shadow-xl flex flex-col justify-between backdrop-blur-xl"
               >
-                Inspect & Book Lot
-              </button>
-            </div>
-          ))}
-        </div>
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl border bg-blue-500/15 border-blue-500/30">
+                      🌾
+                    </div>
+                    <span className="inline-flex px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      {c.grade}
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-white text-base">{c.crop}</h3>
+                  <div className="mt-3 space-y-2 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Available Qty</span>
+                      <span className="font-mono font-medium text-slate-200">{c.qty}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Harvest Date</span>
+                      <span className="font-mono text-slate-300">{c.harvest}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Location</span>
+                      <span className="font-mono text-slate-300 truncate max-w-[130px]">{c.location}</span>
+                    </div>
+                    <div className="flex justify-between pt-1.5 border-t border-white/10">
+                      <span className="text-slate-400">Farm Price</span>
+                      <span className="font-mono font-black text-emerald-400 text-sm">{c.price}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => navigate(`/buyer/marketplace/crop/${c.id}`)}
+                  className="mt-4 w-full py-2.5 bg-white/10 hover:bg-blue-600 text-white font-bold text-xs rounded-xl transition-all duration-200"
+                >
+                  Inspect &amp; Book Lot
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Active Deliveries & Tracking */}

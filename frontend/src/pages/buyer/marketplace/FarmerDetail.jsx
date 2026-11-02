@@ -7,9 +7,9 @@ import PageHeader                   from '../../../components/ui/PageHeader.jsx'
 
 function Row({ label, value }) {
   return (
-    <div className="flex justify-between py-2.5 border-b border-gray-50 last:border-0 gap-4">
+    <div className="flex justify-between py-2.5 border-b border-white/10 last:border-0 gap-4">
       <span className="text-sm text-gray-500 flex-shrink-0">{label}</span>
-      <span className="text-sm font-medium text-gray-800 text-right">{value || '—'}</span>
+      <span className="text-sm font-medium text-slate-100 text-right">{value || '—'}</span>
     </div>
   )
 }
@@ -72,7 +72,7 @@ function FarmerDetailContent() {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 flex-wrap mb-1">
-            <h1 className="text-xl font-bold text-gray-900">{farmer.name}</h1>
+            <h1 className="text-xl font-bold text-white">{farmer.name}</h1>
             {farmer.verification === 'Verified' ? (
               <span className="text-xs font-semibold text-green-700 bg-green-100 px-2.5 py-1 rounded-full">✓ Verified Farmer</span>
             ) : (
@@ -86,7 +86,7 @@ function FarmerDetailContent() {
 
       {/* Farm details */}
       <div className="card mb-6">
-        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4 pb-3 border-b border-gray-100">
+        <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-4 pb-3 border-b border-white/10">
           Farm Information
         </h3>
         <Row label="Farm Name"      value={farmer.farmName} />
@@ -107,14 +107,14 @@ function FarmerDetailContent() {
         {farmer.description && (
           <div className="pt-3">
             <p className="text-xs text-gray-400 mb-1">About</p>
-            <p className="text-sm text-gray-700 leading-relaxed">{farmer.description}</p>
+            <p className="text-sm text-slate-200 leading-relaxed">{farmer.description}</p>
           </div>
         )}
       </div>
 
       {/* Available crops */}
       <div>
-        <h2 className="font-semibold text-gray-900 mb-4">
+        <h2 className="font-semibold text-white mb-4">
           Available Crops <span className="text-gray-400 font-normal text-sm">({crops.length})</span>
         </h2>
         {crops.length === 0 ? (

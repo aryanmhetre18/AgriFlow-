@@ -73,14 +73,14 @@ export default function BookingModal({ crop, onSuccess, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+      <div className="bg-slate-900 border border-white/10 rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto text-slate-100">
         {/* Header */}
-        <div className="flex items-start justify-between p-6 border-b border-gray-100">
+        <div className="flex items-start justify-between p-6 border-b border-white/10">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Book / Pre-book</h2>
-            <p className="text-sm text-gray-500 mt-0.5">{crop.name}{crop.variety ? ` · ${crop.variety}` : ''}</p>
+            <h2 className="text-xl font-bold text-white">Book / Pre-book</h2>
+            <p className="text-sm text-slate-400 mt-0.5">{crop.name}{crop.variety ? ` · ${crop.variety}` : ''}</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-xl hover:bg-gray-100 text-gray-400 transition-colors">
+          <button onClick={onClose} className="p-2 rounded-xl hover:bg-white/10 text-slate-400 transition-colors">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -89,7 +89,7 @@ export default function BookingModal({ crop, onSuccess, onClose }) {
 
         {/* Crop summary */}
         <div className="px-6 pt-4 pb-2">
-          <div className="bg-agri-light rounded-2xl p-4 grid grid-cols-2 gap-3 text-xs">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 grid grid-cols-2 gap-3 text-xs">
             {[
               { l: 'Available Qty', v: `${availQty} ${crop.unit}` },
               { l: 'Listed Price', v: `₹${crop.expectedPrice}/${crop.unit}` },
@@ -100,7 +100,7 @@ export default function BookingModal({ crop, onSuccess, onClose }) {
             ].map(({ l, v }) => (
               <div key={l}>
                 <p className="text-gray-400">{l}</p>
-                <p className="font-semibold text-gray-800 mt-0.5">{v}</p>
+                <p className="font-semibold text-white mt-0.5">{v}</p>
               </div>
             ))}
           </div>
@@ -120,7 +120,7 @@ export default function BookingModal({ crop, onSuccess, onClose }) {
 
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-medium text-slate-300 mb-1.5">
                 Quantity ({crop.unit}) *
               </label>
               <input type="number" min="1" max={availQty} className={inputCls('quantity')}
@@ -128,7 +128,7 @@ export default function BookingModal({ crop, onSuccess, onClose }) {
               {errors.quantity && <p className="text-xs text-red-500 mt-1">{errors.quantity}</p>}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-medium text-slate-300 mb-1.5">
                 Offered Price / {crop.unit} (₹) *
               </label>
               <input type="number" min="0" step="0.01" className={inputCls('pricePerUnit')}
@@ -138,27 +138,27 @@ export default function BookingModal({ crop, onSuccess, onClose }) {
           </div>
 
           {/* Total amount indicator */}
-          <div className="bg-gray-50 rounded-xl px-4 py-3 flex justify-between items-center">
-            <span className="text-sm text-gray-500">Estimated Total</span>
+          <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 flex justify-between items-center">
+            <span className="text-sm text-slate-400">Estimated Total</span>
             <span className="text-lg font-bold text-agri-green">₹{totalCalc}</span>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Delivery Location *</label>
+            <label className="block text-sm font-medium text-slate-300 mb-1.5">Delivery Location *</label>
             <input type="text" className={inputCls('deliveryLocation')}
               placeholder="e.g. Pune, Maharashtra" value={form.deliveryLocation} onChange={set('deliveryLocation')} />
             {errors.deliveryLocation && <p className="text-xs text-red-500 mt-1">{errors.deliveryLocation}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Requested Delivery Date *</label>
+            <label className="block text-sm font-medium text-slate-300 mb-1.5">Requested Delivery Date *</label>
             <input type="date" className={inputCls('requestedDeliveryDate')}
               value={form.requestedDeliveryDate} onChange={set('requestedDeliveryDate')} />
             {errors.requestedDeliveryDate && <p className="text-xs text-red-500 mt-1">{errors.requestedDeliveryDate}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Notes / Special Requirements</label>
+            <label className="block text-sm font-medium text-slate-300 mb-1.5">Notes / Special Requirements</label>
             <textarea rows={2} className="input-field resize-none"
               placeholder="Any special requirements about quality, packaging, delivery…"
               value={form.notes} onChange={set('notes')} />
@@ -166,7 +166,7 @@ export default function BookingModal({ crop, onSuccess, onClose }) {
 
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={onClose}
-              className="flex-1 py-3 rounded-xl border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+              className="flex-1 py-3 rounded-xl border border-white/10 text-sm font-medium text-slate-300 hover:bg-white/5 transition-colors">
               Cancel
             </button>
             <button type="submit" disabled={loading}
